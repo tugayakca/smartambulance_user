@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:smartambulance_user2/model/ambulanceInfo.dart';
+import 'package:smartambulance_user2/model/patientinfo.dart';
 import 'package:smartambulance_user2/model/users.dart';
 import 'package:smartambulance_user2/services/FirebaseApi.dart';
 import 'package:smartambulance_user2/model/hospitalsInfo.dart';
@@ -9,10 +9,12 @@ class CRUDState  {
   FirebaseApi _firebaseApi = new FirebaseApi('users');
    FirebaseApi _firebaseApi2 = new FirebaseApi('hospitalsInfo');
    FirebaseApi _firebaseApi3 = new FirebaseApi('ambulanceInfo');
+   FirebaseApi _firebaseApi4 = new FirebaseApi('patientInfo');
   
-  List<AmbulanceInfo> ambulances;
+
   List<User> users;
   List<HospitalsInfo> hospitals;
+  List<Patient> patient;
 
   Future<List<User>> fetchUsers() async {
     var result = await _firebaseApi.getDataCollection();
@@ -28,6 +30,12 @@ class CRUDState  {
         .map((doc) => HospitalsInfo.fromMap(doc.data))
         .toList();
     return hospitals;
+  }
+
+  Future<List<Patient>> fetchPatient() async{
+    var result = await _firebaseApi4.getDataCollection();
+    patient=result.documents.map((doc)=> Patient.fromMap(doc.data)).toList();
+    return patient;
   }
 
   Stream<QuerySnapshot> fetchProductsAsStream() {
@@ -60,10 +68,11 @@ class CRUDState  {
     return result;
   }
 
-  Future addAmbulance(AmbulanceInfo data,String id) async{
-    var result  = await _firebaseApi3.addDocument2(data.toMap(),id);
+  Future addPatient(Patient data , String id) async{
+    var result = await _firebaseApi4.addDocument(data.toMap(), id);
     return result;
   }
+
 
 }
 

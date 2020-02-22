@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smartambulance_user2/provider.dart';
 import 'package:smartambulance_user2/states/settingState.dart';
-import 'package:smartambulance_user2/ui/Authentication/landingPage.dart';
+//import 'package:smartambulance_user2/ui/Authentication/landingPage.dart';
+import 'package:smartambulance_user2/ui/homepage.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 void main() {
@@ -22,6 +23,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final settingState = Provider.of<SettingState>(context);
+    
     return MaterialApp(
       title: 'Smart Ambulance',
       theme:
@@ -29,7 +31,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       home: SplashScreen(
         seconds: 2,
-        navigateAfterSeconds: LandingPage(),
+        navigateAfterSeconds: HomePage(),
         loadingText: Text('Smart Ambulance'),
         image: Image.asset('images/ambulance.png'),
         photoSize: 100,

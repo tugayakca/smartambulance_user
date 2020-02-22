@@ -1,12 +1,21 @@
 
 import 'package:flutter/material.dart';
+import 'package:smartambulance_user2/states/hospitalState.dart';
 import 'package:smartambulance_user2/ui/hospitalList.dart';
 import 'settings.dart';
+import 'package:provider/provider.dart';
+import 'package:smartambulance_user2/states/authenticationState.dart';
+
+TextEditingController _name = TextEditingController();
+TextEditingController _phone = TextEditingController();
+TextEditingController _address = TextEditingController();
+
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
- 
+ final hospitalState = Provider.of<HospitalState>(context); 
+    hospitalState.showHospitals();
     return   Scaffold(
        appBar: AppBar(
           actions: <Widget>[
@@ -47,14 +56,13 @@ class HomePage extends StatelessWidget {
 class callAmbulance extends StatefulWidget{
   @override
   _callAmbulance createState() => _callAmbulance();
+  
 }
 
 class _callAmbulance extends State<callAmbulance>{
   final _formKey = GlobalKey<FormState>();
   bool vertigo = false;
   bool nausea = false;
-
-
   Widget checkbox(String title, bool boolValue) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -79,6 +87,8 @@ class _callAmbulance extends State<callAmbulance>{
 
   @override
   Widget build(BuildContext context){
+    final authenticationState =
+        Provider.of<AuthenticationState>(context, listen: false);
     return   Form(
        key:_formKey,
       child:  Container(
@@ -90,8 +100,9 @@ class _callAmbulance extends State<callAmbulance>{
             SizedBox(height: 50.0,),
 
             TextField(
+                   controller: _name,
                    decoration: InputDecoration(
-                  hintText: "Adress",
+                  hintText: "Name",
                   hintStyle: TextStyle(
                     color: Colors.grey,
                     fontSize: 16.0,
@@ -105,8 +116,24 @@ class _callAmbulance extends State<callAmbulance>{
             SizedBox(height: 20.0,),
 
             TextField(
+                  controller: _phone,
                    decoration: InputDecoration(
-                  hintText: "What is your urgency?",
+                  hintText: "Phone Number",
+                  hintStyle: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 16.0,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  prefixIcon: Icon(Icons.phone)
+                ), 
+              ),
+            SizedBox(height: 20.0,),
+             TextField(
+                  controller: _address,
+                   decoration: InputDecoration(
+                  hintText: "Address",
                   hintStyle: TextStyle(
                     color: Colors.grey,
                     fontSize: 16.0,
@@ -128,14 +155,15 @@ class _callAmbulance extends State<callAmbulance>{
           ),            
             SizedBox(height: 30.0,),
             RaisedButton(
-              onPressed: () {
-                // Validate returns true if the form is valid, or false
-                // otherwise.
-                if (_formKey.currentState.validate()) {
-                  // If the form is valid, display a Snackbar.
-                  Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('Processing Data')));
-                }
+              onPressed: () {              
+                  authenticationState.addPatientToFirebase(
+                    _name,
+                    _phone, 
+                    _address,   
+                    vertigo,   
+                    nausea,              
+                  );
+                   
               },
               child: Text('Call Ambulance'),
               color: Colors.red,
@@ -149,41 +177,6 @@ class _callAmbulance extends State<callAmbulance>{
     );
   }
 
-/*
-  Widget buildButtonContainer(){
-    return Container(
-      height: 56.0,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(23.0),
-        gradient: LinearGradient(
-          colors: [
-            Color(0xFFFB415B),
-            Color(0xFFEE5623)
-          ],
-          begin: Alignment.centerRight,
-          end: Alignment.centerLeft
-        ),
-      ),
-      child: Center(
-        child:RaisedButton(  
-              onPressed: () {
-                // Validate returns true if the form is valid, or false
-                // otherwise.
-                if (_formKey.currentState.validate()) {
-                  // If the form is valid, display a Snackbar.
-                  Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('Processing Data')));
-                }
-              },
-              child: Text('Submit'), 
-              color: Colors.red,
-              
-            ),
-     
-      ),
-    );
 
-  }*/
 }
      
