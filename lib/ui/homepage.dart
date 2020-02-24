@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:smartambulance_user2/states/hospitalState.dart';
+import 'package:smartambulance_user2/states/mapState.dart';
 import 'package:smartambulance_user2/ui/hospitalList.dart';
 import 'settings.dart';
 import 'package:provider/provider.dart';
@@ -89,6 +90,7 @@ class _callAmbulance extends State<callAmbulance>{
   Widget build(BuildContext context){
     final authenticationState =
         Provider.of<AuthenticationState>(context, listen: false);
+        final mapState = Provider.of<MapState>(context, listen: false);
     return   Form(
        key:_formKey,
       child:  Container(
@@ -155,13 +157,19 @@ class _callAmbulance extends State<callAmbulance>{
           ),            
             SizedBox(height: 30.0,),
             RaisedButton(
-              onPressed: () {              
+              onPressed: () { 
+                double lat=mapState.initialPosition.latitude;
+                double long=mapState.initialPosition.longitude;    
+                bool isAssign=false;         
                   authenticationState.addPatientToFirebase(
                     _name,
                     _phone, 
                     _address,   
                     vertigo,   
-                    nausea,              
+                    nausea, 
+                    lat,
+                    long,
+                    isAssign,                         
                   );
                    
               },

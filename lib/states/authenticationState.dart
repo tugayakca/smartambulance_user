@@ -130,7 +130,7 @@ class AuthenticationState with ChangeNotifier {
     crudState.addProduct(user, uid);
   }
 
-   Future<void> addPatientToFirebase(TextEditingController name, TextEditingController phone,TextEditingController address, bool vertigo,bool nausea, ) async {
+   Future<void> addPatientToFirebase(TextEditingController name, TextEditingController phone,TextEditingController address, bool vertigo,bool nausea,double latitude,double long,bool isAssign ) async {
     Patient patient = new Patient(
         name: name.text,
         phone: phone.text,

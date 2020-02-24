@@ -1,26 +1,30 @@
 import 'dart:convert';
 
 class Patient {
-
   String name;
-  dynamic position;
+  double latitude;
+  double longitude;
+  bool isAssigned;
   String phone;
-  String   vertigo;
-  String   nausea;
-  String   address;
+  String vertigo;
+  String nausea;
+  String address;
   Patient({
     this.name,
-    this.position,
+    this.latitude,
+    this.longitude,
+    this.isAssigned,
     this.phone,
     this.vertigo,
     this.nausea,
     this.address,
   });
 
-
   Patient copyWith({
     String name,
-    dynamic position,
+    double latitude,
+    double longitude,
+    bool isAssigned,
     String phone,
     String vertigo,
     String nausea,
@@ -28,7 +32,9 @@ class Patient {
   }) {
     return Patient(
       name: name ?? this.name,
-      position: position ?? this.position,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      isAssigned: isAssigned ?? this.isAssigned,
       phone: phone ?? this.phone,
       vertigo: vertigo ?? this.vertigo,
       nausea: nausea ?? this.nausea,
@@ -39,7 +45,9 @@ class Patient {
   Map<String, dynamic> toMap() {
     return {
       'name': name,
-      'position': position,
+      'latitude': latitude,
+      'longitude': longitude,
+      'isAssigned': isAssigned,
       'phone': phone,
       'vertigo': vertigo,
       'nausea': nausea,
@@ -49,10 +57,12 @@ class Patient {
 
   static Patient fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-  
+
     return Patient(
       name: map['name'],
-      position: map['position'],
+      latitude: map['latitude'],
+      longitude: map['longitude'],
+      isAssigned: map['isAssigned'],
       phone: map['phone'],
       vertigo: map['vertigo'],
       nausea: map['nausea'],
@@ -66,29 +76,33 @@ class Patient {
 
   @override
   String toString() {
-    return 'Patient name: $name, position: $position, phone: $phone, vertigo: $vertigo, nausea: $nausea, address: $address';
+    return 'Patient name: $name, latitude: $latitude, longitude: $longitude, isAssigned: $isAssigned, phone: $phone, vertigo: $vertigo, nausea: $nausea, address: $address';
   }
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
-  
+
     return o is Patient &&
-      o.name == name &&
-      o.position == position &&
-      o.phone == phone &&
-      o.vertigo == vertigo &&
-      o.nausea == nausea &&
-      o.address == address;
+        o.name == name &&
+        o.latitude == latitude &&
+        o.longitude == longitude &&
+        o.isAssigned == isAssigned &&
+        o.phone == phone &&
+        o.vertigo == vertigo &&
+        o.nausea == nausea &&
+        o.address == address;
   }
 
   @override
   int get hashCode {
     return name.hashCode ^
-      position.hashCode ^
-      phone.hashCode ^
-      vertigo.hashCode ^
-      nausea.hashCode ^
-      address.hashCode;
+        latitude.hashCode ^
+        longitude.hashCode ^
+        isAssigned.hashCode ^
+        phone.hashCode ^
+        vertigo.hashCode ^
+        nausea.hashCode ^
+        address.hashCode;
   }
 }
