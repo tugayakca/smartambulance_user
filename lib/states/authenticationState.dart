@@ -130,17 +130,36 @@ class AuthenticationState with ChangeNotifier {
     crudState.addProduct(user, uid);
   }
 
-   Future<void> addPatientToFirebase(TextEditingController name, TextEditingController phone,TextEditingController address, bool vertigo,bool nausea,double latitude,double long,bool isAssign ) async {
+   Future<void> addPatientToFirebase(dynamic context ,TextEditingController name, TextEditingController phone,TextEditingController address, bool vertigo,bool nausea,double latitude,double long,bool isAssign ) async {
     Patient patient = new Patient(
         name: name.text,
         phone: phone.text,
         address:address.text,
         vertigo: vertigo.toString(),
         nausea: nausea.toString(),
-        
+        latitude: latitude,
+        longitude: long,
+        isAssigned: isAssign,       
         );
     crudState.addPatient(patient, uid);
-  
+   return  showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Call Ambulance'),
+        content: const Text('Your information has been successfully received. An ambulance will arrive as soon as possible.'),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Ok'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+      
    }
 
   Future<void> updateFirebase() async {

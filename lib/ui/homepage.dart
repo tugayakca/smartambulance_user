@@ -90,7 +90,7 @@ class _callAmbulance extends State<callAmbulance>{
   Widget build(BuildContext context){
     final authenticationState =
         Provider.of<AuthenticationState>(context, listen: false);
-        final mapState = Provider.of<MapState>(context, listen: false);
+        final mapState = Provider.of<MapState>(context);
     return   Form(
        key:_formKey,
       child:  Container(
@@ -158,10 +158,11 @@ class _callAmbulance extends State<callAmbulance>{
             SizedBox(height: 30.0,),
             RaisedButton(
               onPressed: () { 
+                mapState.getUserLocation();
                 double lat=mapState.initialPosition.latitude;
                 double long=mapState.initialPosition.longitude;    
                 bool isAssign=false;         
-                  authenticationState.addPatientToFirebase(
+                  authenticationState.addPatientToFirebase(context,
                     _name,
                     _phone, 
                     _address,   
@@ -170,8 +171,7 @@ class _callAmbulance extends State<callAmbulance>{
                     lat,
                     long,
                     isAssign,                         
-                  );
-                   
+                  );                   
               },
               child: Text('Call Ambulance'),
               color: Colors.red,
