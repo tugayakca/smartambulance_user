@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smartambulance_user2/provider.dart';
 import 'package:smartambulance_user2/states/settingState.dart';
-//import 'package:smartambulance_user2/ui/Authentication/landingPage.dart';
 import 'package:smartambulance_user2/ui/homepage.dart';
 import 'package:splashscreen/splashscreen.dart';
 

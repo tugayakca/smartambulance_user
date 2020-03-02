@@ -4,7 +4,7 @@ import 'states/hospitalState.dart';
 
 import 'states/mapState.dart';
 import 'states/settingState.dart';
-import 'states/uiState.dart';
+
 
 List<SingleChildCloneableWidget> providers = [
   ...independentServices,
@@ -16,10 +16,9 @@ List<SingleChildCloneableWidget> independentServices = [
   // Registered our independent states.
   ChangeNotifierProvider.value(value: AuthenticationState()),
   ChangeNotifierProvider.value(value: MapState()),
- 
   ChangeNotifierProvider.value(value: HospitalState()),
   ChangeNotifierProvider.value(value: SettingState()),
-  ChangeNotifierProvider.value(value: UIState()),
+  
 ];
 
 List<SingleChildCloneableWidget> dependentServices = [];

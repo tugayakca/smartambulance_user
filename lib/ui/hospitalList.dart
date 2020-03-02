@@ -23,22 +23,10 @@ class HospitalUI extends StatelessWidget {
             Navigator.of(context).pop();
           },
         ),
-        /* actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.filter_list),
-            onPressed: (){ 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => FilterUI()),
-                );
-                                        
-            },)
-            ],*/
       ),
       body: HospitalList(),
     );
   }
-//aa
 }
 
 class HospitalList extends StatefulWidget {
@@ -54,7 +42,6 @@ class _HospitalListState extends State<HospitalList> {
     return hospitalState.list.isNotEmpty
         ? Scaffold(
             body: FutureBuilder(
-                //    future: hospitalState.showDistance(mapState.initialPosition,distance: 1000,doctorAvailable: doctorAvailable,roomAvailable: roomAvailable),
                 future: hospitalState.showDistance(mapState.initialPosition),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   return RefreshIndicator(
@@ -112,47 +99,7 @@ class _HospitalListState extends State<HospitalList> {
                                             Wrap(
                                               spacing: 2.0,
                                               runSpacing: 5.0,
-                                              children: <Widget>[/*
-                                                IconButton(
-                                                    icon: Icon(
-                                                        Icons.local_hospital),
-                                                    onPressed: () => showDialog(
-                                                        context: context,
-                                                        builder: (context) {
-                                                          return NetworkGiffyDialog(
-                                                            image: Image.asset(
-                                                                "images/hospitaldialog.png"),
-                                                            title: Text(
-                                                                'Information Of Hospital \nSurger Availability : ' +
-                                                                    hospitalState.surgeryRoom(snapshot
-                                                                        .data[
-                                                                            index]
-                                                                        .destinationId),
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .black)),
-                                                            description: Text('Doctor Availability : ' +
-                                                                hospitalState
-                                                                    .availableDoctors(snapshot
-                                                                        .data[
-                                                                            index]
-                                                                        .destinationId) +
-                                                                '\n' +
-                                                                'Emergency Availability : ' +
-                                                                hospitalState
-                                                                    .emergency(snapshot
-                                                                        .data[
-                                                                            index]
-                                                                        .destinationId)),
-                                                            onlyOkButton: true,
-                                                            onOkButtonPressed:
-                                                                () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                          );
-                                                        })), */
+                                              children: <Widget>[
                                                 IconButton(
                                                   icon: Icon(Icons.phone),
                                                   onPressed: () => _callPhone(
@@ -199,7 +146,6 @@ class _HospitalListState extends State<HospitalList> {
                                                                   .data[index]
                                                                   .destinationId);
                                                   final url =
-                                                      //'https://www.google.com/maps/dir/?api=1&origin=${snapshot.data[index].originAddress}&destination=${snapshot.data[index].destinationAddress}&travelmode=driving';
                                                       'https://www.google.com/maps/dir/?api=1&origin=${mapState.initialPosition.latitude},${mapState.initialPosition.longitude}&destination=${snapshot.data[index].destinationAddress},&travelmode=driving';
                                                   _launchURL(url);
                                                 })
