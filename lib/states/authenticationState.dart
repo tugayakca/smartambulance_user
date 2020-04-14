@@ -13,13 +13,16 @@ class AuthenticationState with ChangeNotifier {
   String get uids => uid;
   
 
-   Future<void> addPatientToFirebase(dynamic context ,TextEditingController name, TextEditingController phone,TextEditingController address, bool vertigo,bool nausea,double latitude,double long,bool isAssign ) async {
+   Future<void> addPatientToFirebase(dynamic context ,TextEditingController name, TextEditingController phone,TextEditingController address, bool vertigo,bool nausea,bool blood_pressure,bool diabetes, bool heart_disease , double latitude,double long,bool isAssign ) async {
     Patient patient = new Patient(
         name: name.text,
         phone: phone.text,
         address:address.text,
         vertigo: vertigo.toString(),
         nausea: nausea.toString(),
+        blood_pressure: blood_pressure.toString(),
+        diabetes: diabetes.toString(),
+        heart_disease: heart_disease.toString(),
         latitude: latitude,
         longitude: long,
         isAssigned: isAssign,       

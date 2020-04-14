@@ -64,6 +64,9 @@ class _callAmbulance extends State<callAmbulance>{
   final _formKey = GlobalKey<FormState>();
   bool vertigo = false;
   bool nausea = false;
+  bool blood_pressure=false;
+  bool diabetes=false;
+  bool heart_disease=false;
   Widget checkbox(String title, bool boolValue) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -78,6 +81,15 @@ class _callAmbulance extends State<callAmbulance>{
                   break;
                 case "Nausea":
                   nausea = value;
+                  break;
+                case "Blood Pressure":
+                  blood_pressure=value;
+                  break;
+                case "Diabetes":
+                  diabetes=value;
+                  break;
+                case "Heart Disease":
+                  heart_disease=value;
                   break;
               }
             });},
@@ -151,10 +163,20 @@ class _callAmbulance extends State<callAmbulance>{
             children: <Widget>[
                   SizedBox(width: 20.0,),
                   checkbox("Vertigo", vertigo),   // bas donmesi
-                  SizedBox(width: 20.0,),
+                  SizedBox(width: 45.0,),
                   checkbox("Nausea", nausea),    // mide bulantısı
+                  SizedBox(width: 20.0,),      
+                  checkbox("Blood Pressure", blood_pressure),    //  tansiyon
             ],
-          ),            
+          ),   
+          Row(
+            children: <Widget>[
+                   SizedBox(width: 20.0,),      
+                  checkbox("Diabetes", diabetes) , // seker hastaligi
+                   SizedBox(width:20.0),      
+                  checkbox("Heart Disease", heart_disease), // Kalp Rahatsizligi
+            ],
+          ),           
             SizedBox(height: 30.0,),
             RaisedButton(
               onPressed: () { 
@@ -167,7 +189,10 @@ class _callAmbulance extends State<callAmbulance>{
                     _phone, 
                     _address,   
                     vertigo,   
-                    nausea, 
+                    nausea,
+                    blood_pressure,
+                    diabetes,
+                    heart_disease ,
                     lat,
                     long,
                     isAssign,                         
