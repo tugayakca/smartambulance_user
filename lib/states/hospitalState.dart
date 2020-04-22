@@ -20,7 +20,7 @@ class HospitalState with ChangeNotifier {
   List<Distance> _listDistance = List<Distance>();
   List<Distance> get listDistance => _listDistance;
   List<Distance> get listDistanceCalculated => _listDistance;
-
+  List<Distance> filtredHospital = List<Distance>();
   HospitalState() {}
 
   Future<List<HospitalsInfo>> showHospitals() async {
@@ -31,6 +31,15 @@ class HospitalState with ChangeNotifier {
     String name = '';
     for (int i = 0; i < _list.length; i++) {
       if (id == _list[i].id) {
+        name = _list[i].name;
+      }
+    }
+    return name;
+  }
+    String hospitalNameAddress(id) {
+    String name = '';
+    for (int i = 0; i < _list.length; i++) {
+      if (id == _list[i].formatted_address) {
         name = _list[i].name;
       }
     }
@@ -105,22 +114,30 @@ class HospitalState with ChangeNotifier {
         }
       }
 
-      DistanceMatrix item =
+  DistanceMatrix item =
           await _googleMapsServices.getMatrixDistance(l1, listDest);
-
-      for (int i = 0; i < item.destination_addresses.length; i++) {
-        if (item.rows[0]['elements'][i]['distance']['value'] < 5000) {
-          _listDistance.add(new Distance(
-              item.destination_addresses[i].toString(),
-              item.origin_addresses[0].toString(),
-              _list[i].id,
-              item.rows[0]['elements'][i]['distance']['value'],
-              item.rows[0]['elements'][i]['duration']['value']));
+      if (filtredHospital.isEmpty) {
+        for (int i = 0; i < listDest.length; i++) {
+          for (int j = 0; j < _list.length; j++) {
+            if (item.destination_addresses[i].toString() ==
+                _list[j].formatted_address) {
+              if (item.rows[0]['elements'][i]['distance']['value'] < 10000) {
+                filtredHospital.add(new Distance(
+                    item.destination_addresses[i].toString(),
+                    item.origin_addresses[0].toString(),
+                    hospitalNameAddress(
+                        item.destination_addresses[i].toString()),
+                    _list[j].id,
+                    item.rows[0]['elements'][i]['distance']['value'],
+                    item.rows[0]['elements'][i]['duration']['value']));
+              }
+            }
+          }
         }
       }
     }
-    _listDistance.sort((a, b) => a.duration.compareTo(b.duration));
-    return _listDistance;
+   filtredHospital.sort((a, b) => a.duration.compareTo(b.duration));
+    return filtredHospital;
   }
 /*
   showDetailedHospital(destinationId, context) {
